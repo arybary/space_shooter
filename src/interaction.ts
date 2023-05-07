@@ -1,7 +1,8 @@
 import { getPlayer, playerShoots } from "./sprites/player";
 import { bulletTick } from "./sprites/bullets";
 import { app } from "./game";
-import { twinklingStars } from "./sprites/stars";
+import { starsTick } from "./sprites/stars";
+import { asteroidsTick } from "./sprites/asteroids";
 
 const initInteraction = () => {
     const speedShip = 10;
@@ -15,7 +16,7 @@ const initInteraction = () => {
                 }
                 break;
             case "ArrowRight":
-                if (ship.x + speedShip < app.view.width-20) {
+                if (ship.x + speedShip < app.view.width - 20) {
                     ship.x += speedShip;
                 }
                 break;
@@ -29,9 +30,9 @@ const initInteraction = () => {
     });
 
     app.ticker.add(() => {
-        twinklingStars();
+        starsTick();
         bulletTick();
-       
+        asteroidsTick(1, app.view.width, app.view.height);
     });
 };
 

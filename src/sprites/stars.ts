@@ -21,7 +21,7 @@ export const addStars = (app: Application) => {
     return stars;
 };
 
-export const twinklingStars = () => {
+export const starsTick = () => {
     stars.children.forEach((star) => {
         star.alpha = Math.random() * 0.5 + 0.5;
     });

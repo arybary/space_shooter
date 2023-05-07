@@ -13,6 +13,7 @@ export const addPlayer = (app: Application) => {
 
     player = new Sprite(getTexture(allTextureKeys.spaceShip));
     player.name = appConstants.containers.player;
+  
     player.anchor.set(0.5);
     player.scale.set(0.3);
     player.position.set(app.view.width / 2, app.view.height - 50);

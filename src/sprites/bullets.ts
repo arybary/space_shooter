@@ -1,16 +1,14 @@
 import { Container, DisplayObject, Graphics } from "pixi.js";
 import appConstants from "../common/constants";
 
-
 let bullets: Container<DisplayObject>;
 let timeout;
 
 const bulletSpeed = 1;
 
-
 export const initBullets = () => {
     bullets = new Container();
-    (bullets.name = appConstants.containers.bullets);
+    bullets.name = appConstants.containers.bullets;
     return bullets;
 };
 
