@@ -22,18 +22,9 @@ const allSounds = {
         src: ["assets/sounds/you_win.mp3"],
         volume: 0.5,
     }),
-    [appConstants.sounds.background]: new Howl({
-        src: ["assets/sounds/background.mp3"],
-        volume: 0.3,
-        loop: true,
-        autoplay: false,
-    }),
 };
 
 export const play = (id: string) => allSounds[id].play();
-
-
-
 
 export const muteAll = () => {
     Howler.mute(true);
@@ -42,4 +33,3 @@ export const muteAll = () => {
 export const unmuteAll = () => {
     Howler.mute(false);
 };
-

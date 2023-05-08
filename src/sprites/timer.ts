@@ -15,7 +15,7 @@ export const initTimer = () => {
   return timerText;
 };
 
-export function gameLoop(delta: number) {
+export const timerTick=(delta: number)=> {
   timeLeft -= delta / 60;
 
   const minutes = Math.floor(timeLeft / 60)

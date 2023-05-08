@@ -16,7 +16,7 @@ const appConstants = {
     },
     count: {
         stars: 500,
-        asteroid: 4,
+        asteroid: 6,
         bullets: 10,
     },
     speed: {
@@ -38,8 +38,7 @@ const appConstants = {
         miss: "miss",
         explosion: "explosion",
         gameOver: "gameOver",
-        youWin: "youWin",
-        background: "background",
+        youWin: "youWin",       
     },
 };
 

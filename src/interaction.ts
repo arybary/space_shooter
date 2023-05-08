@@ -8,8 +8,7 @@ import { Container, DisplayObject } from "pixi.js";
 import { checkCollision, destroySprite } from "./common/utils";
 import { asteroidKill, shoot, timer } from "./common/eventHub";
 import { app, rootContainer } from "./game";
-import { gameLoop } from "./sprites/timer";
-
+import { timerTick } from "./sprites/timer";
 
 const checkAllCollisions = () => {
     const asteroids: Container<Asteroid> | null = rootContainer.getChildByName(appConstants.containers.asteroids);
@@ -26,7 +25,7 @@ const checkAllCollisions = () => {
                         toRemove.push(asteroid);
                         addExplosion(asteroid.position);
                         asteroidKill();
-                        shoot()
+                        shoot();
                     }
                 }
             });
@@ -65,9 +64,7 @@ const initInteraction = () => {
         explosionTick();
         asteroidsTick();
         checkAllCollisions();
-        gameLoop(1)
-        
-  
+        timerTick(1);
     });
 };
 
