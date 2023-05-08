@@ -4,7 +4,6 @@ import appConstants from "../common/constants";
 import { EventHub, youLose, youWin } from "../common/eventHub";
 import { muteAll, play, unmuteAll } from "../common/sound";
 import { allTextureKeys } from "../common/textures";
-import { initTimer } from "./timer";
 
 let info;
 let asteroidText: Text;

@@ -8,7 +8,7 @@ import { addStars } from "./sprites/stars";
 import { initInfo } from "./sprites/infoPanel";
 import { addAsteroids } from "./sprites/asteroids";
 import initInteraction from "./interaction";
-import { EventHub } from "./common/eventHub";
+import { EventHub, timer } from "./common/eventHub";
 import { play } from "./common/sound";
 import { getMessangeEndGame } from "./sprites/messages";
 import { initTimer } from "./sprites/timer";
@@ -39,7 +39,7 @@ const createScene = () => {
     const asteroids = addAsteroids();
     rootContainer.addChild(stars, info,timer, asteroids, player, bullets, explosions);
    
-
+   
     return app;
 };
 
@@ -49,6 +49,7 @@ export const initGame = () => {
         if (progress === 100) {
             createScene();
             initInteraction();
+           
            
         }
     });

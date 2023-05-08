@@ -8,6 +8,7 @@ import { Container, DisplayObject } from "pixi.js";
 import { checkCollision, destroySprite } from "./common/utils";
 import { asteroidKill, shoot, timer } from "./common/eventHub";
 import { app, rootContainer } from "./game";
+import { gameLoop } from "./sprites/timer";
 
 
 const checkAllCollisions = () => {
@@ -56,7 +57,7 @@ const initInteraction = () => {
                 break;
         }
     });
-    setInterval(()=>timer(),1000)
+
     app.ticker.add(() => {
         starsTick();
         playerTick();
@@ -64,6 +65,8 @@ const initInteraction = () => {
         explosionTick();
         asteroidsTick();
         checkAllCollisions();
+        gameLoop(1)
+        
   
     });
 };
