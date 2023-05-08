@@ -38,7 +38,7 @@ const appConstants = {
         miss: "miss",
         explosion: "explosion",
         gameOver: "gameOver",
-        youWin: "youWin",       
+        youWin: "youWin",
     },
 };
 

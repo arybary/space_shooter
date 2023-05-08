@@ -2,7 +2,7 @@ import { Container, Graphics, Sprite, Text, TextStyle } from "pixi.js";
 import { getTexture } from "../common/assets";
 import appConstants from "../common/constants";
 import { EventHub, youLose, youWin } from "../common/eventHub";
-import { muteAll, play, unmuteAll } from "../common/sound";
+import { muteAll, unmuteAll } from "../common/sound";
 import { allTextureKeys } from "../common/textures";
 
 let info;
@@ -33,7 +33,7 @@ const style = new TextStyle({
 export const initInfo = () => {
     const effectsOffTexture = getTexture(allTextureKeys.effectsOff);
     const effectsOnTexture = getTexture(allTextureKeys.effectsOn);
- 
+
     info = new Container();
     info.name = appConstants.containers.infoPanel;
 
@@ -98,9 +98,9 @@ export const initInfo = () => {
             unmuteAll();
         }
     });
-    
+
     info.addChild(effectsButton);
-  
+
     return info;
 };
 
@@ -120,4 +120,3 @@ EventHub.on(appConstants.events.shoot, () => {
         youLose();
     }
 });
-

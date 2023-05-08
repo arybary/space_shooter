@@ -6,7 +6,7 @@ import { addExplosion, explosionTick } from "./sprites/explosions";
 import appConstants from "./common/constants";
 import { Container, DisplayObject } from "pixi.js";
 import { checkCollision, destroySprite } from "./common/utils";
-import { asteroidKill, shoot, timer } from "./common/eventHub";
+import { asteroidKill, shoot } from "./common/eventHub";
 import { app, rootContainer } from "./game";
 import { timerTick } from "./sprites/timer";
 

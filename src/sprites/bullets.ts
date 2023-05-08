@@ -13,16 +13,8 @@ export const initBullets = () => {
     return bullets;
 };
 
-export const clearBullets = () => {
-    bullets.children.forEach((b) => {
-        bullets.removeChild(b);
-        b.destroy({ children: true });
-    });
-};
-
-export const addBullet = (coord: { x: number ; y: number }) => {
+export const addBullet = (coord: { x: number; y: number }) => {
     if (timeout) {
-  
         return;
     }
 
@@ -36,20 +28,20 @@ export const addBullet = (coord: { x: number ; y: number }) => {
     timeout = setTimeout(() => {
         timeout = null;
     }, appConstants.timeouts.playerShoots);
-   
-    play(appConstants.sounds.shot)
+
+    play(appConstants.sounds.shot);
 };
 
 export const bulletTick = () => {
     const toRemove: DisplayObject[] = [];
-    bullets.children.forEach((b) => { 
-        b.position.y -= appConstants.speed.bullet ;
+    bullets.children.forEach((b) => {
+        b.position.y -= appConstants.speed.bullet;
         if (b.position.y < 0) {
-            shoot()
+            shoot();
             toRemove.push(b);
         }
     });
     toRemove.forEach((b) => {
-       destroySprite(b)
+        destroySprite(b);
     });
 };
