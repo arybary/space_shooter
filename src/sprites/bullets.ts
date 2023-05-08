@@ -1,5 +1,6 @@
 import { Container, DisplayObject, Graphics } from "pixi.js";
 import appConstants from "../common/constants";
+import { shoot } from "../common/eventHub";
 import { play } from "../common/sound";
 import { destroySprite } from "../common/utils";
 
@@ -35,14 +36,16 @@ export const addBullet = (coord: { x: number ; y: number }) => {
     timeout = setTimeout(() => {
         timeout = null;
     }, appConstants.timeouts.playerShoots);
+   
     play(appConstants.sounds.shot)
 };
 
 export const bulletTick = () => {
     const toRemove: DisplayObject[] = [];
-    bullets.children.forEach((b) => {
+    bullets.children.forEach((b) => { 
         b.position.y -= appConstants.speed.bullet ;
         if (b.position.y < 0) {
+            shoot()
             toRemove.push(b);
         }
     });

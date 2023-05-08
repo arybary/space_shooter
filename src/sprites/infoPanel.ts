@@ -2,8 +2,9 @@ import { Container, Graphics, Sprite, Text, TextStyle } from "pixi.js";
 import { getTexture } from "../common/assets";
 import appConstants from "../common/constants";
 import { EventHub, youLose, youWin } from "../common/eventHub";
-import { muteEffects, unMuteEffects } from "../common/sound";
+import { muteAll, play, unmuteAll } from "../common/sound";
 import { allTextureKeys } from "../common/textures";
+import { initTimer } from "./timer";
 
 let info;
 let asteroidText: Text;
@@ -33,7 +34,7 @@ const style = new TextStyle({
 export const initInfo = () => {
     const effectsOffTexture = getTexture(allTextureKeys.effectsOff);
     const effectsOnTexture = getTexture(allTextureKeys.effectsOn);
-
+ 
     info = new Container();
     info.name = appConstants.containers.infoPanel;
 
@@ -79,9 +80,9 @@ export const initInfo = () => {
 
     effectsOff = new Sprite(effectsOffStatus ? effectsOffTexture : effectsOnTexture);
     if (effectsOffStatus) {
-        muteEffects();
+        muteAll();
     } else {
-        unMuteEffects();
+        unmuteAll();
     }
 
     effectsOff.x = -9;
@@ -93,28 +94,31 @@ export const initInfo = () => {
         effectsOffStatus = !effectsOffStatus;
         effectsOff.texture = effectsOffStatus ? effectsOffTexture : effectsOnTexture;
         if (effectsOffStatus) {
-            muteEffects();
+            muteAll();
         } else {
-            unMuteEffects();
+            unmuteAll();
         }
     });
+    
     info.addChild(effectsButton);
-
+  
     return info;
 };
 
-EventHub.on(appConstants.events.shoot, (event) => {
-    bulletsCount -= 1;
-    bulletsText.text = `bullets:${bulletsCount}`;
-    if (bulletsCount === 0) {
-        youLose();
-    }
-});
-
-EventHub.on(appConstants.events.asteroidKilled, (event) => {
+EventHub.on(appConstants.events.asteroidKilled, () => {
     asteroidCount -= 1;
     asteroidText.text = `asteroid:${asteroidCount}`;
     if (asteroidCount === 0) {
         youWin();
     }
 });
+
+EventHub.on(appConstants.events.shoot, () => {
+    bulletsCount -= 1;
+    bulletsText.text = `bullets:${bulletsCount}`;
+
+    if (bulletsCount === 0 && asteroidCount > 0) {
+        youLose();
+    }
+});
+

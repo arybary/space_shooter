@@ -1,14 +1,15 @@
-import { Application, Sprite } from "pixi.js";
+import { Sprite } from "pixi.js";
 import { getTexture } from "../common/assets";
 import appConstants from "../common/constants";
-import { shoot } from "../common/eventHub";
 import { allTextureKeys } from "../common/textures";
 import { addBullet } from "./bullets";
 
 let player: Sprite;
 let lockTimeout: NodeJS.Timeout | null;
+const speed = appConstants.speed.player;
+const { WIDTH, HEIGHT } = appConstants.size;
 
-export const addPlayer = (app: Application) => {
+export const addPlayer = () => {
     if (player) {
         return player;
     }
@@ -17,7 +18,7 @@ export const addPlayer = (app: Application) => {
     player.name = appConstants.containers.player;
     player.anchor.set(0.5);
     player.scale.set(0.3);
-    player.position.set(app.view.width / 2, app.view.height - 50);
+    player.position.set(WIDTH / 2, HEIGHT - 50);
     return player;
 };
 
@@ -35,8 +36,19 @@ export const getPlayer = () => player;
 
 export const playerShoots = () => {
     if (!lockTimeout) {
-         shoot()
         addBullet({ x: player.position.x, y: player.position.y });
+    }
+};
+
+export const playerMovLeft = () => {
+    if (player.x - speed > 20) {
+        player.x -= speed;
+    }
+};
+
+export const playerMovRight = () => {
+    if (player.x + speed < WIDTH - 20) {
+        player.x += speed;
     }
 };
 

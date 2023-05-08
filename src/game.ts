@@ -8,12 +8,12 @@ import { addStars } from "./sprites/stars";
 import { initInfo } from "./sprites/infoPanel";
 import { addAsteroids } from "./sprites/asteroids";
 import initInteraction from "./interaction";
-import { EventHub, youLose } from "./common/eventHub";
+import { EventHub } from "./common/eventHub";
 import { play } from "./common/sound";
-import { getYouLose, getYouWin } from "./sprites/messages";
+import { getMessangeEndGame } from "./sprites/messages";
+import { initTimer } from "./sprites/timer";
 
-const WIDTH = appConstants.size.WIDTH;
-const HEIGHT = appConstants.size.HEIGHT;
+const { WIDTH, HEIGHT } = appConstants.size;
 
 export const app = new Application({
     background: "#000000",
@@ -22,33 +22,23 @@ export const app = new Application({
     height: HEIGHT,
 });
 
+export const rootContainer = app.stage;
+
 const createScene = () => {
-    console.log("greateScene");
     document.body.appendChild(app.view as HTMLCanvasElement);
 
-    const rootContainer = app.stage;
     rootContainer.interactive = true;
     rootContainer.hitArea = app.screen;
 
-    const stars = addStars(app);
+    const stars = addStars();
     const info = initInfo();
+    const timer= initTimer()
     const bullets = initBullets();
     const explosions = initExplosions();
-    const player = addPlayer(app);
-    const asteroids = addAsteroids(app);
-    rootContainer.addChild(stars, info, asteroids, player, bullets, explosions);
-
-    EventHub.on(appConstants.events.youWin, () => {
-        app.ticker.stop()
-        app.stage.addChild(getYouWin())
-        setTimeout(() => play(appConstants.sounds.youWin), 1000)
-      })
-    
-      EventHub.on(appConstants.events.youLose, () => {
-        app.ticker.stop()
-        rootContainer.addChild(getYouLose())
-        setTimeout(() => play(appConstants.sounds.gameOver), 1000)
-      })
+    const player = addPlayer();
+    const asteroids = addAsteroids();
+    rootContainer.addChild(stars, info,timer, asteroids, player, bullets, explosions);
+   
 
     return app;
 };
@@ -59,8 +49,21 @@ export const initGame = () => {
         if (progress === 100) {
             createScene();
             initInteraction();
+           
         }
     });
 };
 
+EventHub.on(appConstants.events.youWin, () => {
+    app.ticker.stop();
+    app.stage.addChild(getMessangeEndGame("You Win!"));
+    setTimeout(() => play(appConstants.sounds.youWin), 1000);
+});
 
+EventHub.on(appConstants.events.youLose, () => {
+    app.ticker.stop();
+    rootContainer.addChild(getMessangeEndGame("You Lose!"));
+    setTimeout(() => play(appConstants.sounds.gameOver), 1000);
+});
+
+EventHub.on(appConstants.events.restartGame, () => location.reload());

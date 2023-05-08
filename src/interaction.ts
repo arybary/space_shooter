@@ -1,16 +1,16 @@
-import { getPlayer, lockPlayer, playerShoots, playerTick } from "./sprites/player";
+import { lockPlayer, playerMovLeft, playerMovRight, playerShoots, playerTick } from "./sprites/player";
 import { bulletTick } from "./sprites/bullets";
-import { app } from "./game";
 import { starsTick } from "./sprites/stars";
 import { Asteroid, asteroidsTick } from "./sprites/asteroids";
 import { addExplosion, explosionTick } from "./sprites/explosions";
 import appConstants from "./common/constants";
 import { Container, DisplayObject } from "pixi.js";
 import { checkCollision, destroySprite } from "./common/utils";
-import { asteroidKill } from "./common/eventHub";
+import { asteroidKill, shoot, timer } from "./common/eventHub";
+import { app, rootContainer } from "./game";
+
 
 const checkAllCollisions = () => {
-    const rootContainer = app.stage;
     const asteroids: Container<Asteroid> | null = rootContainer.getChildByName(appConstants.containers.asteroids);
     const bullets: Container<DisplayObject> | null = rootContainer.getChildByName(appConstants.containers.bullets);
     const player = rootContainer.getChildByName(appConstants.containers.player);
@@ -21,11 +21,11 @@ const checkAllCollisions = () => {
             asteroids.children.forEach((asteroid) => {
                 if (asteroid && bullet) {
                     if (checkCollision(asteroid, bullet)) {
-                        console.log("попал");
                         toRemove.push(bullet);
                         toRemove.push(asteroid);
                         addExplosion(asteroid.position);
-                        asteroidKill()
+                        asteroidKill();
+                        shoot()
                     }
                 }
             });
@@ -43,36 +43,28 @@ const checkAllCollisions = () => {
 };
 
 const initInteraction = () => {
-    const width = app.view.width;
-    const height = app.view.height;
-    const speedShip = 10;
-    console.log("initInteraction");
-    const ship = getPlayer();
     document.addEventListener("keydown", (event) => {
         switch (event.code) {
             case "ArrowLeft":
-                if (ship.x - speedShip > 20) {
-                    ship.x -= speedShip;
-                }
+                playerMovLeft();
                 break;
             case "ArrowRight":
-                if (ship.x + speedShip < width - 20) {
-                    ship.x += speedShip;
-                }
+                playerMovRight();
                 break;
             case "Space":
                 playerShoots();
                 break;
         }
     });
-
+    setInterval(()=>timer(),1000)
     app.ticker.add(() => {
         starsTick();
         playerTick();
         bulletTick();
         explosionTick();
-        asteroidsTick(1, width, height);
+        asteroidsTick();
         checkAllCollisions();
+  
     });
 };
 

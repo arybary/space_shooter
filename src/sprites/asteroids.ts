@@ -1,9 +1,11 @@
-import { AnimatedSprite, Application, Container, Texture } from "pixi.js";
+import { AnimatedSprite, Container, Texture } from "pixi.js";
 import { getTexture } from "../common/assets";
 import appConstants from "../common/constants";
 import { allTextureKeys } from "../common/textures";
-import { checkCollision, randomIntFromInterval } from "../common/utils";
+import { randomIntFromInterval } from "../common/utils";
 import { addExplosion } from "./explosions";
+
+const { WIDTH, HEIGHT } = appConstants.size;
 
 let asteroids: Container<Asteroid>;
 
@@ -18,14 +20,14 @@ export class Asteroid extends AnimatedSprite {
     }
 }
 
-export const addAsteroids = (app: Application) => {
+export const addAsteroids = () => {
     asteroids = new Container();
     asteroids.name = appConstants.containers.asteroids;
     const textures: Texture[] = getTexture(allTextureKeys.asteroid).animations.image_part;
 
     for (let i = 0; i < appConstants.count.asteroid; i++) {
-        const x = randomIntFromInterval(0, app.view.width);
-        const y = randomIntFromInterval(0, app.view.height-200);
+        const x = randomIntFromInterval(0, WIDTH);
+        const y = randomIntFromInterval(0, HEIGHT - 200);
 
         const asteroid = new Asteroid(textures);
         asteroid.position.set(x, y);
@@ -36,52 +38,36 @@ export const addAsteroids = (app: Application) => {
         asteroid.loop = true;
         asteroid.rotation = (i / 5) * (Math.PI * 2);
         asteroid.play();
-       
-        console.log(asteroid);
-
         asteroids.addChild(asteroid);
     }
     return asteroids;
 };
 export const destroyAsteroid = (asteroid: Asteroid) => {
-    addExplosion( asteroid.position );
-
+    addExplosion(asteroid.position);
 };
 
 export const recalculateAliveAsteroids = () => {
     return;
 };
 
-export const asteroidsTick = (delta: number, width: number, height: number) => {
+export const asteroidsTick = () => {
     asteroids.children.forEach((asteroid, i) => {
         asteroid.x += Math.cos(i) * asteroid.vx;
         asteroid.y += Math.sin(i) * asteroid.vy;
-        
+
         if (asteroid.x < 0) {
             asteroid.vx *= -1;
             asteroid.x = 0;
-        } else if (asteroid.x > width) {
+        } else if (asteroid.x > WIDTH) {
             asteroid.vx *= -1;
-            asteroid.x = width;
+            asteroid.x = WIDTH;
         }
         if (asteroid.y < 0) {
             asteroid.vy *= -1;
             asteroid.y = 0;
-        } else if (asteroid.y > height) {
+        } else if (asteroid.y > HEIGHT) {
             asteroid.vy *= -1;
-            asteroid.y = height;
+            asteroid.y = HEIGHT;
         }
-
-        asteroids.children.forEach((other) => {
-            if (asteroid === other) {
-                return;
-            }
-            if (checkCollision(asteroid, other)) {
-                asteroid.vx *= -1;
-                asteroid.vy *= -1;
-                other.vx *= -1;
-                other.vy *= -1;
-            }
-        });
     });
 };
