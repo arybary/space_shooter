@@ -1,8 +1,8 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/14e7ef42-5c90-44c8-a7ec-0b6e20c59735/deploy-status)](https://venerable-souffle-03d5d5.netlify.app/)
+[![Netlify Status](https://645949afb461781a6b4cfa45--lucent-palmier-834504.netlify.app/)](https://venerable-souffle-03d5d5.netlify.app/)
 
 ## [pixi](https://pixijs.com/)-[typescript](https://www.typescriptlang.org/)-[webpack](https://webpack.js.org/)
 
-# [Dragon kill](https://venerable-souffle-03d5d5.netlify.app/)
+# [space_shooter](https://645949afb461781a6b4cfa45--lucent-palmier-834504.netlify.app/)
 
 ## Commands:
 
