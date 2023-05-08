@@ -1,37 +1,26 @@
-import * as PIXI from "pixi.js";
-import { Application, ICanvas } from "pixi.js";
+import { Application } from "pixi.js";
 import { loadAssets } from "./common/assets";
 import appConstants from "./common/constants";
 import { initBullets } from "./sprites/bullets";
+import { initExplosions } from "./sprites/explosions";
 import { addPlayer } from "./sprites/player";
 import { addStars } from "./sprites/stars";
+import { initInfo } from "./sprites/infoPanel";
 import { addAsteroids } from "./sprites/asteroids";
 import initInteraction from "./interaction";
+import { EventHub, youLose } from "./common/eventHub";
+import { play } from "./common/sound";
+import { getYouLose, getYouWin } from "./sprites/messages";
 
 const WIDTH = appConstants.size.WIDTH;
 const HEIGHT = appConstants.size.HEIGHT;
 
-export const app = new PIXI.Application({
+export const app = new Application({
     background: "#000000",
     antialias: true,
     width: WIDTH,
     height: HEIGHT,
 });
-
-export interface GameState {
-    stopped: boolean;
-    moveLeftActive: boolean;
-    moveRightActive: boolean;
-    app: Application<ICanvas>;
-    mousePosition?: number;
-}
-
-export const gameState: GameState = {
-    stopped: false,
-    moveLeftActive: false,
-    moveRightActive: false,
-    app,
-};
 
 const createScene = () => {
     console.log("greateScene");
@@ -40,17 +29,26 @@ const createScene = () => {
     const rootContainer = app.stage;
     rootContainer.interactive = true;
     rootContainer.hitArea = app.screen;
+
     const stars = addStars(app);
-    rootContainer.addChild(stars);
-
+    const info = initInfo();
     const bullets = initBullets();
-    rootContainer.addChild(bullets);
-
+    const explosions = initExplosions();
     const player = addPlayer(app);
-    rootContainer.addChild(player);
-
     const asteroids = addAsteroids(app);
-    rootContainer.addChild(asteroids);
+    rootContainer.addChild(stars, info, asteroids, player, bullets, explosions);
+
+    EventHub.on(appConstants.events.youWin, () => {
+        app.ticker.stop()
+        app.stage.addChild(getYouWin())
+        setTimeout(() => play(appConstants.sounds.youWin), 1000)
+      })
+    
+      EventHub.on(appConstants.events.youLose, () => {
+        app.ticker.stop()
+        rootContainer.addChild(getYouLose())
+        setTimeout(() => play(appConstants.sounds.gameOver), 1000)
+      })
 
     return app;
 };
@@ -64,3 +62,5 @@ export const initGame = () => {
         }
     });
 };
+
+

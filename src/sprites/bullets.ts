@@ -1,10 +1,10 @@
 import { Container, DisplayObject, Graphics } from "pixi.js";
 import appConstants from "../common/constants";
+import { play } from "../common/sound";
+import { destroySprite } from "../common/utils";
 
 let bullets: Container<DisplayObject>;
-let timeout;
-
-const bulletSpeed = 1;
+let timeout: NodeJS.Timeout | null;
 
 export const initBullets = () => {
     bullets = new Container();
@@ -19,11 +19,11 @@ export const clearBullets = () => {
     });
 };
 
-export const addBullet = (coord: { x: number | undefined; y: number }) => {
-    // if(timeout){
-    //     //sound
-    //     return
-    // }
+export const addBullet = (coord: { x: number ; y: number }) => {
+    if (timeout) {
+  
+        return;
+    }
 
     const bullet = new Graphics();
     bullet.beginFill(0xffffff);
@@ -32,30 +32,21 @@ export const addBullet = (coord: { x: number | undefined; y: number }) => {
 
     bullet.position.set(coord.x, coord.y - 10);
     bullets.addChild(bullet);
-
-    //sound play
-
     timeout = setTimeout(() => {
         timeout = null;
     }, appConstants.timeouts.playerShoots);
-};
-
-export const destroyBullet = (bullet: DisplayObject) => {
-    bullets.removeChild(bullet);
-    bullet.destroy({ children: true });
-    //add explosion BOOM
+    play(appConstants.sounds.shot)
 };
 
 export const bulletTick = () => {
     const toRemove: DisplayObject[] = [];
     bullets.children.forEach((b) => {
-        b.position.y -= bulletSpeed * 2;
+        b.position.y -= appConstants.speed.bullet ;
         if (b.position.y < 0) {
             toRemove.push(b);
         }
     });
     toRemove.forEach((b) => {
-        bullets.removeChild(b);
-        b.destroy({ children: true });
+       destroySprite(b)
     });
 };

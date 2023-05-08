@@ -1,12 +1,12 @@
 import { Application, Container, DisplayObject, Graphics } from "pixi.js";
+import appConstants from "../common/constants";
 
 let stars: Container<DisplayObject>;
 
+
 export const addStars = (app: Application) => {
     stars = new Container();
-    const starCount = 100;
-
-    for (let i = 0; i < starCount; i++) {
+    for (let i = 0; i < appConstants.count.stars; i++) {
         const star = new Graphics();
         const x = Math.random() * app.view.width;
         const y = Math.random() * app.view.height;

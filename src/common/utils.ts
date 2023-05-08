@@ -24,3 +24,4 @@ export const destroySprite = (sprite: DisplayObject) => {
     sprite.parent.removeChild(sprite);
     sprite.destroy({ children: true });
 };
+
