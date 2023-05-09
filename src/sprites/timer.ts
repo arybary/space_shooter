@@ -10,6 +10,7 @@ let timeLeft: number = startTime;
 
 export const initTimer = () => {
     timerText = new Text("1:00", { fontSize: 36, fill: "white" });
+    timerText.name = appConstants.containers.timer;
     timerText.anchor.set(0.5);
     timerText.position.set(WIDTH - 100, 50);
     return timerText;

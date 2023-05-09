@@ -4,7 +4,7 @@ import { allTextureKeys } from "../common/textures";
 import { getTexture } from "../common/assets";
 import appConstants from "../common/constants";
 
-let effectsOff: Sprite;
+
 let effectsOffStatus = false;
 const { WIDTH } = appConstants.size;
 
@@ -24,7 +24,7 @@ export const initVolumeBtn = () => {
     graphicsEffectsOff.endFill();
     effectsButton.addChild(graphicsEffectsOff);
 
-    effectsOff = new Sprite(effectsOffStatus ? effectsOffTexture : effectsOnTexture);
+    const effectsOff = new Sprite(effectsOffStatus ? effectsOffTexture : effectsOnTexture);
     if (effectsOffStatus) {
         muteAll();
     } else {
@@ -35,7 +35,7 @@ export const initVolumeBtn = () => {
     effectsOff.y = -9;
     effectsOff.name = "effectsOff";
     effectsButton.addChild(effectsOff);
-    effectsButton.interactive = true;
+    effectsButton.eventMode = 'dynamic';
     effectsButton.on("pointertap", () => {
         effectsOffStatus = !effectsOffStatus;
         effectsOff.texture = effectsOffStatus ? effectsOffTexture : effectsOnTexture;

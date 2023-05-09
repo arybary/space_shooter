@@ -23,7 +23,7 @@ const style = new TextStyle({
 
 export const getMessangeEndGame = (massage: string) => {
     const messageContainer = new Container();
-    messageContainer.interactive = true;
+    messageContainer.eventMode = 'dynamic';
 
     const graphics2 = new Graphics();
     graphics2.lineStyle(1, 0xff00ff, 1);

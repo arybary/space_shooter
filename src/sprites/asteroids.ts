@@ -46,10 +46,6 @@ export const destroyAsteroid = (asteroid: Asteroid) => {
     addExplosion(asteroid.position);
 };
 
-export const recalculateAliveAsteroids = () => {
-    return;
-};
-
 export const asteroidsTick = () => {
     asteroids.children.forEach((asteroid, i) => {
         asteroid.x += Math.cos(i) * asteroid.vx;

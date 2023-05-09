@@ -6,6 +6,8 @@ const { WIDTH, HEIGHT } = appConstants.size;
 
 export const addStars = () => {
     stars = new Container();
+    stars.name = appConstants.containers.stars;
+    
     for (let i = 0; i < appConstants.count.stars; i++) {
         const star = new Graphics();
         const x = Math.random() * WIDTH;

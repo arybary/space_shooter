@@ -28,7 +28,7 @@ export const rootContainer = app.stage;
 const createScene = () => {
     document.body.appendChild(app.view as HTMLCanvasElement);
 
-    rootContainer.interactive = true;
+    rootContainer.eventMode = 'dynamic';
     rootContainer.hitArea = app.screen;
 
     const stars = addStars();

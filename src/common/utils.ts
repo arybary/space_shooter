@@ -19,9 +19,7 @@ export const checkCollision = (object1: DisplayObject, object2: DisplayObject) =
     return false;
 };
 
-
 export const destroySprite = (sprite: DisplayObject) => {
     sprite.parent.removeChild(sprite);
     sprite.destroy({ children: true });
 };
-
