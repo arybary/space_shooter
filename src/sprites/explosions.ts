@@ -28,7 +28,7 @@ export const addExplosion = ({ x, y }: Coord) => {
     explosion.position.set(x, y);
     explosions.addChild(explosion);
     explosion.play();
-    play(appConstants.sounds.explosion);
+    play(appConstants.sounds.explosionAsteroid);
 };
 
 export const explosionTick = () => {

@@ -36,7 +36,8 @@ const appConstants = {
     sounds: {
         shot: "shot",
         miss: "miss",
-        explosion: "explosion",
+        explosionAsteroid: "explosionAsteroid",
+        explosionPlayer: "explosionPlayer",
         gameOver: "gameOver",
         youWin: "youWin",
     },

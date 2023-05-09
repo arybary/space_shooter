@@ -40,7 +40,7 @@ const createScene = () => {
     const asteroids = addAsteroids();
     const volumeButton = initVolumeBtn();
 
-    rootContainer.addChild(stars, info, timer,volumeButton, asteroids, player, bullets, explosions);
+    rootContainer.addChild(stars, info, timer, volumeButton, asteroids, player, bullets, explosions);
 
     return app;
 };
@@ -57,7 +57,7 @@ export const initGame = () => {
 
 EventHub.on(appConstants.events.youWin, () => {
     app.ticker.stop();
-    app.stage.addChild(getMessangeEndGame("You Win!"));
+    rootContainer.addChild(getMessangeEndGame("You Win!"));
     setTimeout(() => play(appConstants.sounds.youWin), 1000);
 });
 

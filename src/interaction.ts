@@ -9,6 +9,7 @@ import { checkCollision, destroySprite } from "./common/utils";
 import { asteroidKill, shoot } from "./common/eventHub";
 import { app, rootContainer } from "./game";
 import { timerTick } from "./sprites/timer";
+import { play } from "./common/sound";
 
 const { delta } = appConstants.timer;
 
@@ -38,6 +39,7 @@ const checkAllCollisions = () => {
     if (asteroids && player) {
         asteroids.children.forEach((bullet) => {
             if (checkCollision(bullet, player)) {
+                play(appConstants.sounds.explosionAsteroid);
                 lockPlayer();
             }
         });
