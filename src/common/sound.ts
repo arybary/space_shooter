@@ -25,10 +25,7 @@ const allSounds = {
     }),
 };
 
-export const play = (id: string) => {
-    allSounds[id].play();
-    Howler.ctx.resume();
-};
+export const play = (id: string) => allSounds[id].play();
 
 export const muteAll = () => {
     Howler.mute(true);
