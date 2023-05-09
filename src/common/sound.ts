@@ -6,10 +6,7 @@ const allSounds = {
         src: ["assets/sounds/shot.mp3"],
         volume: 0.5,
     }),
-    [appConstants.sounds.miss]: new Howl({
-        src: ["assets/sounds/miss.mp3"],
-        volume: 0.5,
-    }),
+
     [appConstants.sounds.explosion]: new Howl({
         src: ["assets/sounds/explosion.mp3"],
         volume: 0.5,

@@ -33,7 +33,7 @@ export const getMessangeEndGame = (massage: string) => {
 
     messageContainer.addChild(graphics2);
 
-    const text2 = new Text(massage, style);
+    const text2 = new Text(`${massage}`, style);
     text2.anchor.set(0.5);
     text2.x = 250 / 2;
     text2.y = 100 / 2;

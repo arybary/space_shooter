@@ -10,10 +10,12 @@ import { asteroidKill, shoot } from "./common/eventHub";
 import { app, rootContainer } from "./game";
 import { timerTick } from "./sprites/timer";
 
+const { delta } = appConstants.timer;
+
 const checkAllCollisions = () => {
     const asteroids: Container<Asteroid> | null = rootContainer.getChildByName(appConstants.containers.asteroids);
     const bullets: Container<DisplayObject> | null = rootContainer.getChildByName(appConstants.containers.bullets);
-    const player = rootContainer.getChildByName(appConstants.containers.player);
+    const player: DisplayObject | null = rootContainer.getChildByName(appConstants.containers.player);
 
     if (asteroids && bullets) {
         const toRemove: DisplayObject[] = [];
@@ -34,8 +36,8 @@ const checkAllCollisions = () => {
     }
 
     if (asteroids && player) {
-        asteroids.children.forEach((b) => {
-            if (checkCollision(b, player)) {
+        asteroids.children.forEach((bullet) => {
+            if (checkCollision(bullet, player)) {
                 lockPlayer();
             }
         });
@@ -64,7 +66,7 @@ const initInteraction = () => {
         explosionTick();
         asteroidsTick();
         checkAllCollisions();
-        timerTick(1);
+        timerTick(delta);
     });
 };
 

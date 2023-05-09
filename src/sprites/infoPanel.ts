@@ -1,17 +1,12 @@
-import { Container, Graphics, Sprite, Text, TextStyle } from "pixi.js";
-import { getTexture } from "../common/assets";
+import { Container, Graphics, Text, TextStyle } from "pixi.js";
 import appConstants from "../common/constants";
 import { EventHub, youLose, youWin } from "../common/eventHub";
-import { muteAll, unmuteAll } from "../common/sound";
-import { allTextureKeys } from "../common/textures";
 
-let info;
+let info: Container;
 let asteroidText: Text;
 let bulletsText: Text;
 let bulletsCount = appConstants.count.bullets;
 let asteroidCount = appConstants.count.asteroid;
-let effectsOff: Sprite;
-let effectsOffStatus = false;
 
 const style = new TextStyle({
     fontFamily: "Arial",
@@ -31,9 +26,6 @@ const style = new TextStyle({
 });
 
 export const initInfo = () => {
-    const effectsOffTexture = getTexture(allTextureKeys.effectsOff);
-    const effectsOnTexture = getTexture(allTextureKeys.effectsOn);
-
     info = new Container();
     info.name = appConstants.containers.infoPanel;
 
@@ -65,42 +57,6 @@ export const initInfo = () => {
     info.addChild(infoPanel);
     info.alpha = 0.6;
 
-    const effectsButton = new Container();
-    effectsButton.x = appConstants.size.WIDTH - 100;
-    effectsButton.y = 100;
-    effectsButton.name = "musicButton";
-
-    const graphicsEffectsOff = new Graphics();
-    graphicsEffectsOff.lineStyle(2, 0xff00ff, 1);
-    graphicsEffectsOff.beginFill(0x650a5a, 0.25);
-    graphicsEffectsOff.drawCircle(15, 15, 30);
-    graphicsEffectsOff.endFill();
-    effectsButton.addChild(graphicsEffectsOff);
-
-    effectsOff = new Sprite(effectsOffStatus ? effectsOffTexture : effectsOnTexture);
-    if (effectsOffStatus) {
-        muteAll();
-    } else {
-        unmuteAll();
-    }
-
-    effectsOff.x = -9;
-    effectsOff.y = -9;
-    effectsOff.name = "effectsOff";
-    effectsButton.addChild(effectsOff);
-    effectsButton.interactive = true;
-    effectsButton.on("pointertap", () => {
-        effectsOffStatus = !effectsOffStatus;
-        effectsOff.texture = effectsOffStatus ? effectsOffTexture : effectsOnTexture;
-        if (effectsOffStatus) {
-            muteAll();
-        } else {
-            unmuteAll();
-        }
-    });
-
-    info.addChild(effectsButton);
-
     return info;
 };
 
@@ -116,7 +72,7 @@ EventHub.on(appConstants.events.shoot, () => {
     bulletsCount -= 1;
     bulletsText.text = `bullets:${bulletsCount}`;
 
-    if (bulletsCount === 0 && asteroidCount > 0) {
+    if (asteroidCount > bulletsCount) {
         youLose();
     }
 });

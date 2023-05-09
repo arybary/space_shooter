@@ -23,7 +23,7 @@ const appConstants = {
         bullet: 10,
         player: 10,
     },
-    timer: { startTime: 60, tick: 1000 },
+    timer: { startTime: 60, delta: 1 },
     events: {
         infoUpdated: "infoUpdated",
         asteroidKilled: "asteroidKilled",

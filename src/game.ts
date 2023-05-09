@@ -12,6 +12,7 @@ import { EventHub } from "./common/eventHub";
 import { play } from "./common/sound";
 import { getMessangeEndGame } from "./sprites/messages";
 import { initTimer } from "./sprites/timer";
+import { initVolumeBtn } from "./sprites/volumeButton";
 
 const { WIDTH, HEIGHT } = appConstants.size;
 
@@ -37,8 +38,9 @@ const createScene = () => {
     const explosions = initExplosions();
     const player = addPlayer();
     const asteroids = addAsteroids();
-    
-    rootContainer.addChild(stars, info, timer, asteroids, player, bullets, explosions);
+    const volumeButton = initVolumeBtn();
+
+    rootContainer.addChild(stars, info, timer,volumeButton, asteroids, player, bullets, explosions);
 
     return app;
 };
