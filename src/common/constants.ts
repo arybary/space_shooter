@@ -25,6 +25,7 @@ const appConstants = {
     speed: {
         bullet: 10,
         player: 10,
+        asteroid:3,
     },
     timer: { startTime: 60, delta: 1 },
     events: {

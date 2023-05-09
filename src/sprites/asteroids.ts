@@ -6,6 +6,7 @@ import { randomIntFromInterval } from "../common/utils";
 import { addExplosion } from "./explosions";
 
 const { WIDTH, HEIGHT } = appConstants.size;
+const speed = appConstants.speed.asteroid;
 
 let asteroids: Container<Asteroid>;
 
@@ -15,8 +16,8 @@ export class Asteroid extends AnimatedSprite {
 
     constructor(textures: Texture[]) {
         super(textures);
-        this.vx = 2;
-        this.vy = 2;
+        this.vx = speed;
+        this.vy = speed;
     }
 }
 
@@ -33,8 +34,6 @@ export const addAsteroids = () => {
         asteroid.position.set(x, y);
         asteroid.anchor.set(0.5);
         asteroid.animationSpeed = 0.3;
-        asteroid.vx = Math.random() * 10 - 5;
-        asteroid.vy = Math.random() * 10 - 5;
         asteroid.loop = true;
         asteroid.rotation = (i / 5) * (Math.PI * 2);
         asteroid.play();
@@ -51,19 +50,12 @@ export const asteroidsTick = () => {
         asteroid.x += Math.cos(i) * asteroid.vx;
         asteroid.y += Math.sin(i) * asteroid.vy;
 
-        if (asteroid.x < 0) {
+        if (asteroid.x < 0 || asteroid.x > WIDTH) {
             asteroid.vx *= -1;
-            asteroid.x = 0;
-        } else if (asteroid.x > WIDTH) {
-            asteroid.vx *= -1;
-            asteroid.x = WIDTH;
         }
-        if (asteroid.y < 0) {
+
+        if (asteroid.y < 0 || asteroid.y > HEIGHT) {
             asteroid.vy *= -1;
-            asteroid.y = 0;
-        } else if (asteroid.y > HEIGHT) {
-            asteroid.vy *= -1;
-            asteroid.y = HEIGHT;
         }
     });
 };
