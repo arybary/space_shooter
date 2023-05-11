@@ -3,7 +3,7 @@ import { youLose } from "../common/eventHub";
 import appConstants from "../common/constants";
 
 const { WIDTH } = appConstants.size;
-const { startTime } = appConstants.timer;
+const startTime = appConstants.timeouts.timer;
 
 let timerText: Text;
 let timeLeft: number = startTime;
@@ -29,7 +29,7 @@ export const timerTick = (delta: number) => {
 
     timerText.text = timeString;
 
-    if (timeLeft <= 1) {
+    if (timeLeft <= 0) {
         youLose();
     }
 };

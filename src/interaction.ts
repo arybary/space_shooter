@@ -11,8 +11,6 @@ import { app, rootContainer } from "./game";
 import { timerTick } from "./sprites/timer";
 import { play } from "./common/sound";
 
-const { delta } = appConstants.timer;
-
 const checkAllCollisions = () => {
     const asteroids: Container<Asteroid> | null = rootContainer.getChildByName(appConstants.containers.asteroids);
     const bullets: Container<DisplayObject> | null = rootContainer.getChildByName(appConstants.containers.bullets);
@@ -61,7 +59,7 @@ const initInteraction = () => {
         }
     });
 
-    app.ticker.add(() => {
+    app.ticker.add((delta) => {
         starsTick();
         playerTick();
         bulletTick();

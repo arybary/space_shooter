@@ -4,7 +4,7 @@ const appConstants = {
         HEIGHT: 720,
     },
     containers: {
-        stars:"stars",
+        stars: "stars",
         player: "player",
         bullets: "bullets",
         asteroids: "asteroids",
@@ -16,6 +16,7 @@ const appConstants = {
     timeouts: {
         playerLock: 5000,
         playerShoots: 1000,
+        timer: 60,
     },
     count: {
         stars: 500,
@@ -25,9 +26,8 @@ const appConstants = {
     speed: {
         bullet: 10,
         player: 10,
-        asteroid:3,
+        asteroid: 3,
     },
-    timer: { startTime: 60, delta: 1 },
     events: {
         infoUpdated: "infoUpdated",
         asteroidKilled: "asteroidKilled",

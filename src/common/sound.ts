@@ -13,7 +13,7 @@ const allSounds = {
     }),
     [appConstants.sounds.explosionPlayer]: new Howl({
         src: ["assets/sounds/explosion2.mp3"],
-        volume: 0.5,
+        volume: 0.2,
     }),
     [appConstants.sounds.gameOver]: new Howl({
         src: ["assets/sounds/game_over.mp3"],
