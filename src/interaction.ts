@@ -37,8 +37,7 @@ const checkAllCollisions = () => {
     if (asteroids && player) {
         asteroids.children.forEach((bullet) => {
             if (checkCollision(bullet, player)) {
-                play(appConstants.sounds.explosionAsteroid);
-                lockPlayer();
+               lockPlayer();
             }
         });
     }
